@@ -42,7 +42,7 @@
   "companyID": 1,
   "position": "백엔드 주니어 개발자",
   "reward": 1000000,
-  "contents": "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..",
+  "content": "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..",
   "skill": "Python"
 }
 ```
@@ -56,7 +56,7 @@
     "companyID": 1,
     "position": "백엔드 주니어 개발자",
     "reward": 1000000,
-    "contents": "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..",
+    "content": "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..",
     "skill": "Python",
     "recruitID": "11"
   }
@@ -83,21 +83,21 @@
 {
   "position": "백엔드 주니어 개발자",
   "reward": 1500000,
-  "contents": "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다. 자격요건은..",
-  "skill": "Python"
+  "content": "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다. 자격요건은..",
+  "skill": "NodeJS"
 }
 ```
 
-#### Response(201)
+#### Response(200)
 
 ```json
 {
-  "message": "정상적으로 채용 공고를 수정하였습니다.",
+  "message": "채용공고 11번을 수정하였습니다.",
   "data": {
     "position": "백엔드 주니어 개발자",
     "reward": 1500000,
-    "contents": "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다. 자격요건은..",
-    "skill": "Python"
+    "content": "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다. 자격요건은..",
+    "skill": "NodeJS"
   }
 }
 ```
@@ -106,8 +106,30 @@
 
 ```json
 {
-  "message": "Recruitment with Position/Reward/Contents/Skill is Null.",
+  "message": "채용공고의 position/reward/content/skill 내용이 비어있습니다.",
   "error": "Bad Request",
   "statusCode": 400
+}
+```
+
+### 2. 채용공고를 삭제합니다.
+
+`DELETE /recruitment/:id`
+
+#### Response(200)
+
+```json
+{
+  "message": "채용공고 14번을 삭제하였습니다."
+}
+```
+
+#### ERROR(404)
+
+```json
+{
+  "message": "채용공고 14번이 존재하지 않습니다.",
+  "error": "Not Found",
+  "statusCode": 404
 }
 ```
