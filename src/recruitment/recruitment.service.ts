@@ -1,4 +1,4 @@
-import { Repository, Like } from 'typeorm';
+import { Repository } from 'typeorm';
 import {
   BadRequestException,
   Injectable,
@@ -11,6 +11,7 @@ import { Company } from '~/company/company.entity';
 
 import { CreateRecruitmentDto } from './dto/create-recruitment.dto';
 import { UpdateRecruitmentDto } from './dto/update-recruitment.dto';
+import { CreateApplicationDto } from '~/recruitment/dto/create-application.dto';
 
 @Injectable()
 export class RecruitmentService {
@@ -111,6 +112,29 @@ export class RecruitmentService {
     };
   }
 
+  async addApplication(id: number, { userID }) {
+    const exist = await this.applications.findOne({
+      where: {
+        recruitID: id,
+        userID: userID,
+      },
+    });
+
+    if (exist) {
+      throw new BadRequestException(`이미 ${userID}가 지원한 채용공고입니다.`);
+    }
+    const application: CreateApplicationDto = {
+      recruitID: id,
+      userID: userID,
+    };
+
+    await this.applications.save(application);
+    return {
+      message: `${id}번 채용공고에 지원하였습니다.`,
+      data: application,
+    };
+  }
+
   async setRecruitment(id: number, updateRecruitmentDto: UpdateRecruitmentDto) {
     const recruitment = await this.recruitment.findOne({
       where: {
@@ -123,13 +147,13 @@ export class RecruitmentService {
     }
 
     if (!updateRecruitmentDto.position) {
-      throw new BadRequestException(`채용공고의 position 내용이 비어있습니다.`);
+      throw new BadRequestException('채용공고의 position 내용이 비어있습니다.');
     } else if (!updateRecruitmentDto.reward) {
-      throw new BadRequestException(`채용공고의 reward 내용이 비어있습니다.`);
+      throw new BadRequestException('채용공고의 reward 내용이 비어있습니다.');
     } else if (!updateRecruitmentDto.content) {
-      throw new BadRequestException(`채용공고의 content 내용이 비어있습니다.`);
+      throw new BadRequestException('채용공고의 content 내용이 비어있습니다.');
     } else if (!updateRecruitmentDto.skill) {
-      throw new BadRequestException(`채용공고의 skill 내용이 비어있습니다.`);
+      throw new BadRequestException('채용공고의 skill 내용이 비어있습니다.');
     }
 
     await this.recruitment

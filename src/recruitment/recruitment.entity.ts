@@ -1,6 +1,5 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   PrimaryColumn,
   Column,
   ManyToOne,
@@ -9,10 +8,9 @@ import {
 } from 'typeorm';
 import { Company } from '~/company/company.entity';
 import { CreateRecruitmentDto } from './dto/create-recruitment.dto';
-import { CreateApplicationDto } from '~/recruitment/dto/create-application.dto';
 
 abstract class Common {
-  @PrimaryGeneratedColumn({
+  @PrimaryColumn({
     name: 'RECRUIT_ID',
     type: 'bigint',
     unsigned: true,

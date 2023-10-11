@@ -12,6 +12,7 @@ import {
 import { RecruitmentService } from './recruitment.service';
 import { CreateRecruitmentDto } from '~/recruitment/dto/create-recruitment.dto';
 import { UpdateRecruitmentDto } from '~/recruitment/dto/update-recruitment.dto';
+import { User } from '~/user/user.entity';
 
 @Controller('recruitment')
 export class RecruitmentController {
@@ -48,6 +49,14 @@ export class RecruitmentController {
       reward: data.reward,
       content: data.content,
       skill: data.skill,
+    });
+  }
+
+  @Post(':id/apply')
+  @HttpCode(200)
+  async insertApplication(@Param('id') id: number, @Body() user: User) {
+    return await this.recruitmentService.addApplication(id, {
+      userID: user.userID,
     });
   }
 
