@@ -2,10 +2,10 @@ import {
   Controller,
   Post,
   HttpCode,
-  Query,
   Patch,
   Param,
   Body,
+  Delete,
 } from '@nestjs/common';
 import { RecruitmentService } from './recruitment.service';
 import { CreateRecruitmentDto } from '~/recruitment/dto/create-recruitment.dto';
@@ -22,13 +22,13 @@ export class RecruitmentController {
       companyID: data.companyID,
       position: data.position,
       reward: data.reward,
-      contents: data.contents,
+      content: data.content,
       skill: data.skill,
     });
   }
 
   @Patch(':id')
-  @HttpCode(201)
+  @HttpCode(200)
   async updateRecruitment(
     @Param('id') id: number,
     @Body() data: UpdateRecruitmentDto,
@@ -36,8 +36,14 @@ export class RecruitmentController {
     return await this.recruitmentService.setRecruitment(id, {
       position: data.position,
       reward: data.reward,
-      contents: data.contents,
+      content: data.content,
       skill: data.skill,
     });
+  }
+
+  @Delete(':id')
+  @HttpCode(200)
+  async deleteRecruitment(@Param('id') id: number) {
+    return await this.recruitmentService.removeRecruitment(id);
   }
 }

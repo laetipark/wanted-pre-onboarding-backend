@@ -17,7 +17,7 @@ export class CompanyService {
 
     await this.company.save(company);
     return {
-      message: '정상적으로 회사를 등록하였습니다.',
+      message: '회사를 등록하였습니다.',
       data: company,
     };
   }

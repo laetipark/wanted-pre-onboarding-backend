@@ -33,7 +33,7 @@ export class Recruitment extends Common {
     name: 'RECRUIT_CNT',
     type: 'longtext',
   })
-  contents!: string;
+  content!: string;
 
   @Column({
     name: 'SKILL',
@@ -45,7 +45,7 @@ export class Recruitment extends Common {
     recruitment.companyID = createRecruitmentDto.companyID;
     recruitment.position = createRecruitmentDto.position;
     recruitment.reward = createRecruitmentDto.reward;
-    recruitment.contents = createRecruitmentDto.contents;
+    recruitment.content = createRecruitmentDto.content;
     recruitment.skill = createRecruitmentDto.skill;
 
     return recruitment;

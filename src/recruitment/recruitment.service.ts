@@ -30,14 +30,14 @@ export class RecruitmentService {
 
     if (!company) {
       throw new NotFoundException(
-        `Company with ID ${createRecruitmentDto.companyID} not found.`,
+        `회사 ID ${createRecruitmentDto.companyID}번이 존재하지 않습니다.`,
       );
     }
     const recruitment = Recruitment.from(createRecruitmentDto);
 
     await this.recruitment.save(recruitment);
     return {
-      message: '정상적으로 채용 공고를 등록하였습니다.',
+      message: '채용공고를 등록하였습니다.',
       data: recruitment,
     };
   }
@@ -54,13 +54,13 @@ export class RecruitmentService {
     }
 
     if (!updateRecruitmentDto.position) {
-      throw new BadRequestException(`Recruitment with Position is Null.`);
+      throw new BadRequestException(`채용공고의 position 내용이 비어있습니다.`);
     } else if (!updateRecruitmentDto.reward) {
-      throw new BadRequestException(`Recruitment with Reward is Null.`);
-    } else if (!updateRecruitmentDto.contents) {
-      throw new BadRequestException(`Recruitment with Contents is Null.`);
+      throw new BadRequestException(`채용공고의 reward 내용이 비어있습니다.`);
+    } else if (!updateRecruitmentDto.content) {
+      throw new BadRequestException(`채용공고의 content 내용이 비어있습니다.`);
     } else if (!updateRecruitmentDto.skill) {
-      throw new BadRequestException(`Recruitment with Skill is Null.`);
+      throw new BadRequestException(`채용공고의 skill 내용이 비어있습니다.`);
     }
 
     await this.recruitment
@@ -73,8 +73,22 @@ export class RecruitmentService {
       .execute();
 
     return {
-      message: '정상적으로 채용 공고를 수정하였습니다.',
+      message: `채용공고 ${id}번을 수정하였습니다.`,
       data: updateRecruitmentDto,
     };
+  }
+
+  async removeRecruitment(id: number) {
+    const data = await this.recruitment.delete({
+      recruitID: id,
+    });
+
+    if (data.affected) {
+      return {
+        message: `채용공고 ${id}번을 삭제하였습니다.`,
+      };
+    } else {
+      throw new NotFoundException(`채용공고 ${id}번이 존재하지 않습니다.`);
+    }
   }
 }
