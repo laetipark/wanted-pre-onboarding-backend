@@ -1,5 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, PrimaryColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  PrimaryColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  Relation,
+} from 'typeorm';
+import { Company } from '~/company/company.entity';
 import { CreateRecruitmentDto } from './dto/create-recruitment.dto';
+import { CreateApplicationDto } from '~/recruitment/dto/create-application.dto';
 
 abstract class Common {
   @PrimaryGeneratedColumn({
@@ -50,6 +60,10 @@ export class Recruitment extends Common {
 
     return recruitment;
   }
+
+  @ManyToOne(() => Company, (item) => item.recruitments)
+  @JoinColumn({ name: 'COMPANY_ID', referencedColumnName: 'companyID' })
+  company: Relation<Company>;
 }
 
 @Entity({ name: 'APPLICATIONS' })

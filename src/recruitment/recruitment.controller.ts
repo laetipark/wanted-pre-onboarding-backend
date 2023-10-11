@@ -1,11 +1,13 @@
 import {
   Controller,
+  Get,
   Post,
-  HttpCode,
   Patch,
+  Delete,
+  HttpCode,
   Param,
   Body,
-  Delete,
+  Query,
 } from '@nestjs/common';
 import { RecruitmentService } from './recruitment.service';
 import { CreateRecruitmentDto } from '~/recruitment/dto/create-recruitment.dto';
@@ -14,6 +16,28 @@ import { UpdateRecruitmentDto } from '~/recruitment/dto/update-recruitment.dto';
 @Controller('recruitment')
 export class RecruitmentController {
   constructor(private recruitmentService: RecruitmentService) {}
+
+  @Get()
+  @HttpCode(200)
+  async selectRecruitments(
+    @Query('search') search: string,
+    @Query('page') page: number,
+    @Query('rows') rows: number,
+    @Query('sort') sort: string,
+  ) {
+    return await this.recruitmentService.getRecruitments({
+      search: search || '',
+      page: page || 1,
+      rows: rows || 10,
+      sort: sort || 'DESC',
+    });
+  }
+
+  @Get(':id')
+  @HttpCode(200)
+  async selectRecruitment(@Param('id') id: number) {
+    return await this.recruitmentService.getRecruitment(id);
+  }
 
   @Post()
   @HttpCode(201)

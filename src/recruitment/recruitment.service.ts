@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import {
   BadRequestException,
   Injectable,
@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Recruitment } from './recruitment.entity';
+import { Applications, Recruitment } from './recruitment.entity';
 import { Company } from '~/company/company.entity';
 
 import { CreateRecruitmentDto } from './dto/create-recruitment.dto';
@@ -19,7 +19,76 @@ export class RecruitmentService {
     private company: Repository<Company>,
     @InjectRepository(Recruitment)
     private recruitment: Repository<Recruitment>,
+    @InjectRepository(Applications)
+    private applications: Repository<Applications>,
   ) {}
+
+  async getRecruitment(id: number) {
+    console.log(id);
+    const recruitments = await this.recruitment
+      .createQueryBuilder('r')
+      .select('r.recruitID', 'recruitID')
+      .addSelect('r.position', 'position')
+      .addSelect('r.reward', 'reward')
+      .addSelect('r.skill', 'skill')
+      .addSelect('r.content', 'content')
+      .addSelect('c.companyID', 'companyID')
+      .addSelect('c.companyName', 'companyName')
+      .addSelect('c.country', 'country')
+      .addSelect('c.region', 'region')
+      .innerJoin('r.company', 'c')
+      .where('r.recruitID = :id', {
+        id: id,
+      })
+      .getRawOne();
+
+    const otherRecruitment = await this.recruitment
+      .createQueryBuilder('r')
+      .select('r.recruitID', 'recruitID')
+      .where('r.companyID = :id', {
+        id: recruitments.companyID,
+      })
+      .getRawMany()
+      .then((result) => result.map((data) => data.recruitID));
+
+    return {
+      message: '채용공고를 검색하였습니다.',
+      data: {
+        ...recruitments,
+        otherRecruitment: otherRecruitment,
+      },
+    };
+  }
+
+  async getRecruitments({ search, page, rows, sort }) {
+    return {
+      message: '채용공고를 검색하였습니다.',
+      data: await this.recruitment
+        .createQueryBuilder('r')
+        .select('r.recruitID', 'recruitID')
+        .addSelect('r.position', 'position')
+        .addSelect('r.reward', 'reward')
+        .addSelect('r.skill', 'skill')
+        .addSelect('c.companyID', 'companyID')
+        .addSelect('c.companyName', 'companyName')
+        .addSelect('c.country', 'country')
+        .addSelect('c.region', 'region')
+        .innerJoin('r.company', 'c')
+        .where('r.position LIKE :search', {
+          search: `%${search}%`,
+        })
+        .orWhere('r.content LIKE :search', {
+          search: `%${search}%`,
+        })
+        .orWhere('r.skill LIKE :search', {
+          search: `%${search}%`,
+        })
+        .orderBy('r.recruitID', `${sort === 'ASC' ? 'ASC' : 'DESC'}`)
+        .take(rows)
+        .skip((page - 1) * rows)
+        .getRawMany(),
+    };
+  }
 
   async addRecruitment(createRecruitmentDto: CreateRecruitmentDto) {
     const company = await this.company.findOne({

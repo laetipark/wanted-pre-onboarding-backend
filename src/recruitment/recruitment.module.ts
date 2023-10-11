@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { RecruitmentController } from './recruitment.controller';
 import { RecruitmentService } from './recruitment.service';
-import { Recruitment } from '~/recruitment/recruitment.entity';
+import { Applications, Recruitment } from '~/recruitment/recruitment.entity';
 import { Company } from '~/company/company.entity';
 
 @Module({

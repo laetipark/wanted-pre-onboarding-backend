@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  Relation,
+} from 'typeorm';
+import { Recruitment } from '~/recruitment/recruitment.entity';
 import { CreateCompanyDto } from '~/company/dto/create-company.dto';
 
 @Entity({ name: 'COMPANY' })
@@ -33,4 +40,7 @@ export class Company {
 
     return company;
   }
+
+  @OneToMany(() => Recruitment, (item) => item.company)
+  recruitments: Relation<Recruitment[]>;
 }
