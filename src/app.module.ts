@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CompanyModule } from './company/company.module';
+import { RecruitmentModule } from './recruitment/recruitment.module';
+import { UserModule } from './user/user.module';
 
 import DatabaseConfig from './config/database.config';
 
@@ -10,13 +11,16 @@ import DatabaseConfig from './config/database.config';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `${__dirname}/config/env/.${process.env.NODE_ENV}.env`,
+      envFilePath: `${__dirname}/config/env/.env`,
     }),
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConfig,
     }),
+    CompanyModule,
+    RecruitmentModule,
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
