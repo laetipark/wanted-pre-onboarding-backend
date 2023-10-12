@@ -53,7 +53,7 @@ export class RecruitmentController {
   }
 
   @Post(':id/apply')
-  @HttpCode(200)
+  @HttpCode(201)
   async insertApplication(@Param('id') id: number, @Body() user: User) {
     return await this.recruitmentService.addApplication(id, {
       userID: user.userID,
