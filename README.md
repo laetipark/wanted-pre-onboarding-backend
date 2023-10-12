@@ -291,7 +291,7 @@
 
 ### 6. 사용자는 채용공고에 지원합니다.
 
-`GET /recruitment/:id/apply`
+`POST /recruitment/:id/apply`
 
 #### Request(Body)
 
@@ -301,7 +301,7 @@
 }
 ```
 
-#### Response(200)
+#### Response(201)
 
 ```json
 {
