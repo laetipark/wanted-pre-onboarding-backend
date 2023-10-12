@@ -25,7 +25,6 @@ export class RecruitmentService {
   ) {}
 
   async getRecruitment(id: number) {
-    console.log(id);
     const recruitments = await this.recruitment
       .createQueryBuilder('r')
       .select('r.recruitID', 'recruitID')
@@ -43,6 +42,12 @@ export class RecruitmentService {
       })
       .getRawOne();
 
+    if (!recruitments) {
+      throw new NotFoundException(
+        `채용 상세 페이지 ${id}번을 불러올 수 없습니다.`,
+      );
+    }
+
     const otherRecruitment = await this.recruitment
       .createQueryBuilder('r')
       .select('r.recruitID', 'recruitID')
@@ -53,7 +58,7 @@ export class RecruitmentService {
       .then((result) => result.map((data) => data.recruitID));
 
     return {
-      message: '채용공고를 검색하였습니다.',
+      message: `채용 상세 페이지 ${id}번을 검색하였습니다.`,
       data: {
         ...recruitments,
         otherRecruitment: otherRecruitment,
@@ -130,7 +135,7 @@ export class RecruitmentService {
 
     await this.applications.save(application);
     return {
-      message: `${id}번 채용공고에 지원하였습니다.`,
+      message: `${id}번 채용공고에 이미 지원하였습니다.`,
       data: application,
     };
   }
