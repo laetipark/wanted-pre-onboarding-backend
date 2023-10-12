@@ -17,8 +17,14 @@
 - **RECRUITMENT** : 채용공고
 - **APPLICATIONS** : 지원내역
 
-## 환경 설정
+## 환경 설정 및 실행
 
+- 데이터베이스 스키마는 `wanted`라는 이름으로 생성하였습니다.
+  ```sql
+  CREATE DATABASE `wanted`
+  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  DEFAULT ENCRYPTION='N';
+  ```
 - 데이터베이스 환경은 /config/env/폴더에서 설정할 수 있습니다.
     ```dotenv
     HOST_PORT='서버 포트'
@@ -28,6 +34,15 @@
     DATABASE_PASSWORD='계정 비밀번호'
     DATABASE_NAME='데이터베이스 이름'
     ```
+- `start.sh` 또는 `start.bat`를 통해 **데이터베이스 테이블을 구성**하고 회사(Company), 사용자(User) **임의 데이터를 생성**한 뒤 **어플리케이션을 실행**합니다.
+  ```shell
+  # 리눅스 사용자일 경우
+  sh start.sh
+  ```
+    ```shell
+  # 윈도우 사용자일 경우
+  ./start.bat
+  ```
 
 ## API
 
@@ -58,7 +73,9 @@
     "reward": 1000000,
     "content": "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은..",
     "skill": "Python",
-    "recruitID": "11"
+    "recruitID": "1",
+    "createdAt": "2023-10-12T11:39:07.000Z",
+    "updatedAt": "2023-10-12T11:39:07.000Z"
   }
 }
 ```
@@ -148,7 +165,7 @@
 
 ##### 4-1. 채용공고 목록 확인
 
-- GET /recruitment?page=1&rows=10&sort=DESC
+`GET /recruitment?page=1&rows=10&sort=DESC`
 
 ```json
 {
@@ -191,9 +208,9 @@
 
 #### Response(200)
 
-##### 4-1. 채용공고 목록 확인
+##### 4-2. 채용공고 검색
 
-- GET /recruitment?page=1&rows=10&sort=ASC&search=nodejs
+`GET /recruitment?page=1&rows=10&sort=ASC&search=nodejs`
 
 ```json
 {
@@ -288,10 +305,12 @@
 
 ```json
 {
-  "message": "10번 채용공고에 이미 지원하였습니다.",
+  "message": "10번 채용공고에 지원하였습니다.",
   "data": {
     "recruitID": "10",
-    "userID": "creator98@naver.com"
+    "userID": "creator98@naver.com",
+    "createdAt": "2023-10-12T11:39:07.000Z",
+    "updatedAt": "2023-10-12T11:39:07.000Z"
   }
 }
 ```
@@ -303,5 +322,15 @@
   "message": "이미 creator98@naver.com가 지원한 채용공고입니다.",
   "error": "Bad Request",
   "statusCode": 400
+}
+```
+
+#### ERROR(404)
+
+```json
+{
+  "message": "채용공고 99번이 존재하지 않습니다.",
+  "error": "Not Found",
+  "statusCode": 404
 }
 ```
