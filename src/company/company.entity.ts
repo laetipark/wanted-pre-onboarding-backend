@@ -4,6 +4,9 @@ import {
   Column,
   OneToMany,
   Relation,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Recruitment } from '~/recruitment/recruitment.entity';
 import { CreateCompanyDto } from '~/company/dto/create-company.dto';
@@ -12,7 +15,6 @@ import { CreateCompanyDto } from '~/company/dto/create-company.dto';
 export class Company {
   @PrimaryGeneratedColumn({
     name: 'COMPANY_ID',
-    type: 'bigint',
     unsigned: true,
   })
   companyID: number;
@@ -31,6 +33,25 @@ export class Company {
     name: 'COMPANY_RGN',
   })
   region: string;
+
+  @CreateDateColumn({
+    name: 'CREATED_AT',
+    select: false,
+  })
+  createdAt!: Date;
+
+  @UpdateDateColumn({
+    name: 'UPDATED_AT',
+    select: false,
+  })
+  updatedAt!: Date;
+
+  @DeleteDateColumn({
+    name: 'DELETED_AT',
+    select: false,
+    nullable: true,
+  })
+  deletedAt!: Date | null;
 
   static from(createCompanyDto: CreateCompanyDto) {
     const company = new Company();

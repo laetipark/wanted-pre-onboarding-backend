@@ -5,21 +5,21 @@ import {
   ManyToOne,
   JoinColumn,
   Relation,
+  CreateDateColumn,
+  UpdateDateColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Company } from '~/company/company.entity';
 import { CreateRecruitmentDto } from './dto/create-recruitment.dto';
 
-abstract class Common {
-  @PrimaryColumn({
+@Entity({ name: 'RECRUITMENT' })
+export class Recruitment {
+  @PrimaryGeneratedColumn({
     name: 'RECRUIT_ID',
-    type: 'bigint',
     unsigned: true,
   })
   recruitID: number;
-}
 
-@Entity({ name: 'RECRUITMENT' })
-export class Recruitment extends Common {
   @PrimaryColumn({
     name: 'COMPANY_ID',
     type: 'bigint',
@@ -48,6 +48,18 @@ export class Recruitment extends Common {
   })
   skill!: string;
 
+  @CreateDateColumn({
+    name: 'CREATED_AT',
+    select: false,
+  })
+  createdAt!: Date;
+
+  @UpdateDateColumn({
+    name: 'UPDATED_AT',
+    select: false,
+  })
+  updatedAt!: Date;
+
   static from(createRecruitmentDto: CreateRecruitmentDto) {
     const recruitment = new CreateRecruitmentDto();
     recruitment.companyID = createRecruitmentDto.companyID;
@@ -65,9 +77,27 @@ export class Recruitment extends Common {
 }
 
 @Entity({ name: 'APPLICATIONS' })
-export class Applications extends Common {
+export class Applications {
+  @PrimaryColumn({
+    name: 'RECRUIT_ID',
+    unsigned: true,
+  })
+  recruitID: number;
+
   @PrimaryColumn({
     name: 'USER_ID',
   })
   userID: string;
+
+  @CreateDateColumn({
+    name: 'CREATED_AT',
+    select: false,
+  })
+  createdAt!: Date;
+
+  @UpdateDateColumn({
+    name: 'UPDATED_AT',
+    select: false,
+  })
+  updatedAt!: Date;
 }

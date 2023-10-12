@@ -118,6 +118,11 @@ export class RecruitmentService {
   }
 
   async addApplication(id: number, { userID }) {
+    const recruitment = await this.recruitment.findOne({
+      where: {
+        recruitID: id,
+      },
+    });
     const exist = await this.applications.findOne({
       where: {
         recruitID: id,
@@ -128,6 +133,12 @@ export class RecruitmentService {
     if (exist) {
       throw new BadRequestException(`이미 ${userID}가 지원한 채용공고입니다.`);
     }
+    if (!recruitment) {
+      throw new NotFoundException(
+        `채용 상세 페이지 ${id}번을 불러올 수 없습니다.`,
+      );
+    }
+
     const application: CreateApplicationDto = {
       recruitID: id,
       userID: userID,
@@ -135,7 +146,7 @@ export class RecruitmentService {
 
     await this.applications.save(application);
     return {
-      message: `${id}번 채용공고에 이미 지원하였습니다.`,
+      message: `${id}번 채용공고에 지원하였습니다.`,
       data: application,
     };
   }

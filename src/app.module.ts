@@ -5,16 +5,15 @@ import { CompanyModule } from './company/company.module';
 import { RecruitmentModule } from './recruitment/recruitment.module';
 import { UserModule } from './user/user.module';
 
-import DatabaseConfig from './config/database.config';
+import DataSource from './configs/database.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `${__dirname}/config/env/.env`,
     }),
     TypeOrmModule.forRootAsync({
-      useClass: DatabaseConfig,
+      useClass: DataSource,
     }),
     CompanyModule,
     RecruitmentModule,
