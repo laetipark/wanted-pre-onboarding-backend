@@ -66,7 +66,7 @@
 
 ```json
 {
-  "message": "정상적으로 채용 공고를 등록하였습니다.",
+  "message": "채용 공고를 등록하였습니다.",
   "data": {
     "companyID": 1,
     "position": "백엔드 주니어 개발자",
@@ -167,7 +167,7 @@
 
 `GET /recruitment?page=1&rows=10&sort=DESC`
 
-```json
+```json lines
 {
   "message": "채용공고를 검색하였습니다.",
   "data": [
@@ -212,7 +212,7 @@
 
 `GET /recruitment?page=1&rows=10&sort=ASC&search=nodejs`
 
-```json
+```json lines
 {
   "message": "채용공고를 검색하였습니다.",
   "data": [
@@ -257,7 +257,7 @@
 
 #### Response(200)
 
-```json
+```json lines
 {
   "message": "채용 상세 페이지 10번을 검색하였습니다.",
   "data": {
