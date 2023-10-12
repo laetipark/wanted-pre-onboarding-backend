@@ -85,8 +85,8 @@ export class RecruitmentService {
           search: `%${search}%`,
         })
         .orderBy('r.recruitID', `${sort === 'ASC' ? 'ASC' : 'DESC'}`)
-        .take(rows)
-        .skip((page - 1) * rows)
+        .limit(rows)
+        .offset((page - 1) * rows)
         .getRawMany(),
     };
   }
