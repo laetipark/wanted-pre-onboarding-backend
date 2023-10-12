@@ -4,18 +4,18 @@
 
 ## 개발 환경
 
-- 언어 및 런타임 환경 : Typescript, Node.js
-- 프레임워크 : NestJS
-- 데이터베이스 : MySQL
+- **언어 및 런타임 환경** : Typescript, Node.js
+- **프레임워크** : NestJS
+- **데이터베이스** : MySQL
 
 ## 데이터베이스 모델링
 
 ![모델링](./public/images/wanted_erd.png)
 
-- COMPANY : 회사
-- USER : 사용자
-- RECRUITMENT : 채용공고
-- APPLICATIONS : 지원내역
+- **COMPANY** : 회사
+- **USER** : 사용자
+- **RECRUITMENT** : 채용공고
+- **APPLICATIONS** : 지원내역
 
 ## 환경 설정
 
@@ -112,7 +112,7 @@
 }
 ```
 
-### 2. 채용공고를 삭제합니다.
+### 3. 채용공고를 삭제합니다.
 
 `DELETE /recruitment/:id`
 
@@ -131,5 +131,177 @@
   "message": "채용공고 14번이 존재하지 않습니다.",
   "error": "Not Found",
   "statusCode": 404
+}
+```
+
+### 4. 채용공고 목록을 가져옵니다.
+
+`GET /recruitment`
+
+- Parameters
+    - page: 페이지 번호(기본값: 1)
+    - rows: 페이지 당 채용공고 개수(기본값: 10)
+    - sort: 정렬 방식(기본값: DESC, DESC/ASC)
+    - search: 검색 키워드
+
+#### Response(200)
+
+##### 4-1. 채용공고 목록 확인
+
+- GET /recruitment?page=1&rows=10&sort=DESC
+
+```json
+{
+  "message": "채용공고를 검색하였습니다.",
+  "data": [
+    {
+      "recruitID": 30,
+      "position": "백엔드 주니어 개발자",
+      "reward": 1500000,
+      "skill": "Python",
+      "companyID": 1,
+      "companyName": "원티드랩",
+      "country": "한국",
+      "region": "서울"
+    },
+    {
+      "recruitID": 29,
+      "position": "백엔드 주니어 개발자",
+      "reward": 1000000,
+      "skill": "NodeJS",
+      "companyID": 3,
+      "companyName": "넥슨",
+      "country": "한국",
+      "region": "판교"
+    },
+    {
+      "recruitID": 28,
+      "position": "프론트엔드 개발자",
+      "reward": 500000,
+      "skill": "javascript",
+      "companyID": 1,
+      "companyName": "원티드랩",
+      "country": "한국",
+      "region": "서울"
+    },
+    ...
+  ]
+}
+```
+
+#### Response(200)
+
+##### 4-1. 채용공고 목록 확인
+
+- GET /recruitment?page=1&rows=10&sort=ASC&search=nodejs
+
+```json
+{
+  "message": "채용공고를 검색하였습니다.",
+  "data": [
+    {
+      "recruitID": 10,
+      "position": "백엔드 주니어 개발자",
+      "reward": 1500000,
+      "skill": "NodeJS",
+      "companyID": 1,
+      "companyName": "원티드랩",
+      "country": "한국",
+      "region": "서울"
+    },
+    {
+      "recruitID": 26,
+      "position": "NodeJS 주니어 개발자",
+      "reward": 1500000,
+      "skill": "Typescript",
+      "companyID": 1,
+      "companyName": "원티드랩",
+      "country": "한국",
+      "region": "서울"
+    },
+    {
+      "recruitID": 29,
+      "position": "백엔드 주니어 개발자",
+      "reward": 1000000,
+      "skill": "NodeJS",
+      "companyID": 3,
+      "companyName": "넥슨",
+      "country": "한국",
+      "region": "판교"
+    },
+    ...
+  ]
+}
+```
+
+### 5. 채용공고 상세 페이지를 가져옵니다.
+
+`GET /recruitment/:id`
+
+#### Response(200)
+
+```json
+{
+  "message": "채용 상세 페이지 10번을 검색하였습니다.",
+  "data": {
+    "recruitID": 10,
+    "position": "백엔드 주니어 개발자",
+    "reward": 1500000,
+    "content": "원티드랩에서 백엔드 주니어 개발자를 '적극' 채용합니다. 자격요건은..",
+    "skill": "NodeJS",
+    "companyID": 1,
+    "companyName": "원티드랩",
+    "country": "한국",
+    "region": "서울",
+    "otherRecruitment": [
+      10,
+      15,
+      ...
+    ]
+  }
+}
+```
+
+#### ERROR(404)
+
+```json
+{
+  "message": "회사 ID 99번이 존재하지 않습니다.",
+  "error": "Not Found",
+  "statusCode": 404
+}
+```
+
+### 6. 사용자는 채용공고에 지원합니다.
+
+`GET /recruitment/:id/apply`
+
+#### Request(Body)
+
+```json
+{
+  "userID": "creator98@naver.com"
+}
+```
+
+#### Response(200)
+
+```json
+{
+  "message": "10번 채용공고에 이미 지원하였습니다.",
+  "data": {
+    "recruitID": "10",
+    "userID": "creator98@naver.com"
+  }
+}
+```
+
+#### ERROR(400)
+
+```json
+{
+  "message": "이미 creator98@naver.com가 지원한 채용공고입니다.",
+  "error": "Bad Request",
+  "statusCode": 400
 }
 ```
