@@ -2,6 +2,11 @@
 
 # 원티드 프리온보딩 백엔드 인턴십 사전 과제
 
+![Node.js](https://img.shields.io/badge/Node.js-v19.2.0-DDDDDD?style=flat&logo=Node.js&logoColor=FFFFFF&labelColor=339933)
+![Typescript](https://img.shields.io/badge/Typescript-3178C6?style=flat&logo=Javascript&logoColor=FFFFFF)
+![WebStorm](https://img.shields.io/badge/WebStorm-07B2F4?style=flat&logo=WebStorm&logoColor=FFFFFF)
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=NestJS&logoColor=FFFFFFF)
+
 ## 개발 환경
 
 - **언어 및 런타임 환경** : Typescript, Node.js
