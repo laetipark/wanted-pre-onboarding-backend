@@ -14,7 +14,7 @@
 - [[ 여기가자 ] 지리기반 맛집 추천 서비스 RESTful API 서버, laetipark, github](https://github.com/laetipark/lets-go-here)
 - [[ 돈이머니 ] 예산 관리 서비스 RESTful API 서버, laetipark, github](https://github.com/laetipark/money-is-money)
 
-## 🛠️ 활용 기술 스택
+### 🛠️ 활용 기술 스택
 
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white">&nbsp;
 <img src="https://img.shields.io/badge/Nest.js-E0234E?style=for-the-badge&logo=nestjs&logoColor=white">&nbsp;
