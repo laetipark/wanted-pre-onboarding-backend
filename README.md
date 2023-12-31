@@ -1,6 +1,6 @@
 ![](https://bow-hair-db3.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F571a24a3-05f9-4ea5-b01f-cba1a3ac070d%2Fa864b64b-c5ad-4d82-b7bc-2bcabc892bbc%2Fhome.jpeg?table=block&id=1850bca2-6fda-4e0c-a141-0df270c03409&spaceId=571a24a3-05f9-4ea5-b01f-cba1a3ac070d&width=2000&userId=&cache=v2)
 
-# 원티드 프리온보딩 백엔드 인턴십 사전 과제
+# 원티드 프리온보딩 백엔드 인턴십
 
 ## 💼 프로그램 소개
 `원티드`에 진행하는 프로그램으로, `4주` 동안 `기업 과제`를 수행하면서 작업한 협업 또는 개인 `프로젝트`와 `기록`한 것들을 정리해보았습니다.
