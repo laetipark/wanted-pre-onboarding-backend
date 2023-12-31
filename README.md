@@ -7,7 +7,7 @@
 - [[ Organization ] 원티드 프리온보딩 백엔드 인턴십 - TEAM E](https://github.com/Wanted-Pre-Onboarding-Team-E)
 
 ### :file_folder: 수행한 기업 과제 목록
-- [[ FeedMoa ] 소셜 미디어 통합 Feed 서비스 RESTful API 서버, laetipark, github](https://github.com/laetipark/feed-moa)
+- [[ 피드모아 ] 소셜 미디어 통합 Feed 서비스 RESTful API 서버, laetipark, github](https://github.com/laetipark/feed-moa)
 - [[ 여기가자 ] 지리기반 맛집 추천 서비스 RESTful API 서버, laetipark, github](https://github.com/laetipark/lets-go-here)
 - [[ 돈이머니 ] 예산 관리 서비스 RESTful API 서버, laetipark, github](https://github.com/laetipark/money-is-money)
 
